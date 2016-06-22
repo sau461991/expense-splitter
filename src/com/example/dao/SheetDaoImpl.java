@@ -8,7 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import com.example.model.Sheet;
 
@@ -25,19 +25,14 @@ public class SheetDaoImpl implements SheetDao {
 	        this.sessionFactory = sessionFactory;
 	    }
 	
-	@Override
-	@Transactional
-	public void creatSheet(Sheet sheet) {
-		
-		sessionFactory.getCurrentSession().saveOrUpdate(sheet);
-	}
-
+	
 	@Override
 	public void openSheet(int id) {
 		
 		//call search api here
 		
 	}
+	@SuppressWarnings("unchecked")
 	public boolean searchSheet(int id) {
 		
 		//SessionFactory sessionFactory = sessionFactory.getCurrentSession();
@@ -52,7 +47,7 @@ public class SheetDaoImpl implements SheetDao {
 			String hql = "FROM Sheet S WHERE S.id = :id";
 			Query query = session.createQuery(hql);
 			query.setParameter("id",id);
-			List<Sheet> sheetList =  query.list();
+			List<Sheet> sheetList = query.list();
 			if(!sheetList.isEmpty())
 				isSheetPresent = true;
 			
